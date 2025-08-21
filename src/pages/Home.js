@@ -24,9 +24,11 @@ export default function Home() {
   };
 
   // Filtered jobs based on search
-  const filteredJobs = jobs.filter(job =>
-    job.company.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredJobs = jobs.filter(job => {
+  if (!job.company) return false; // skip items with falsy company
+  return job.company.toLowerCase().includes(search.toLowerCase());
+});
+
 
   return (
     <div style={{ maxWidth: '600px', margin: '20px auto', padding: '10px' }}>
