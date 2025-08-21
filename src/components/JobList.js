@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const statusColors = {
   Applied: '#3498db',
   'Application Viewed': '#9b59b6',
@@ -24,7 +24,7 @@ export default function JobList({ jobs, refreshJobs }) {
 
   const handleSaveClick = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/applications/${id}`, { status: editStatus });
+      await axios.put(`${API_URL}/applications/${id}`, { status: editStatus });
       setEditingId(null);
       refreshJobs(); // function from parent to fetch updated jobs
     } catch (err) {

@@ -8,7 +8,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState('');
 
   // Fetch data from backend
   useEffect(() => {
