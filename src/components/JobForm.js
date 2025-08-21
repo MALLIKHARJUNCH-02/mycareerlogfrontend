@@ -17,6 +17,7 @@ export default function JobForm({ addJob }) {
     return (
         <form onSubmit={handleSubmit} style={{ marginBottom: '15px' }}>
             <input
+            class="form-control border-secondary m-1"
                 type="text"
                 value={company}
                 onChange={e => setCompany(e.target.value)}
@@ -42,7 +43,7 @@ export default function JobForm({ addJob }) {
                 <option>Withdrawn</option>
                 <option>On Hold</option>
             </select>
-            <button type="submit">Add</button>
+            <button type="submit" class="btn btn-success m-1">Add</button>
         </form>
     );
 }
