@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const statusColors = {
   Applied: '#3498db',
   'Application Viewed': '#9b59b6',
@@ -26,7 +28,7 @@ export default function JobList({ jobs, refreshJobs }) {
     try {
       await axios.put(`${API_URL}/applications/${id}`, { status: editStatus });
       setEditingId(null);
-      refreshJobs(); // function from parent to fetch updated jobs
+      await refreshJobs();
     } catch (err) {
       console.error('Update error:', err);
     }
@@ -44,8 +46,8 @@ export default function JobList({ jobs, refreshJobs }) {
         const isEditing = editingId === (job._id || job.id);
         return (
           <li key={job._id || job.id} style={{ padding: 10, borderBottom: '1px solid #ccc' }}>
-            <strong>{job.company}</strong> &nbsp;&nbsp; | &nbsp;&nbsp;
-            Applied on: {job.appliedDate.split('T')[0]} &nbsp;&nbsp; | &nbsp;&nbsp;
+            <strong>{job.company}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+            Applied on: {job.appliedDate.split('T')[0]} &nbsp;&nbsp;|&nbsp;&nbsp;
             Status:{' '}
             {isEditing ? (
               <select value={editStatus} onChange={(e) => setEditStatus(e.target.value)}>
@@ -61,11 +63,11 @@ export default function JobList({ jobs, refreshJobs }) {
             &nbsp;&nbsp;
             {isEditing ? (
               <>
-                <button onClick={() => handleSaveClick(job._id || job.id)}>Save</button>
-                <button onClick={handleCancelClick}>Cancel</button>
+                <button type="button" className="btn btn-success m-1" onClick={() => handleSaveClick(job._id || job.id)}>Save</button>
+                <button type="button" className="btn btn-danger" onClick={handleCancelClick}>Cancel</button>
               </>
             ) : (
-              <button onClick={() => handleEditClick(job)}>Edit</button>
+              <button type="button" className="btn btn-primary" onClick={() => handleEditClick(job)}>Edit</button>
             )}
           </li>
         );
