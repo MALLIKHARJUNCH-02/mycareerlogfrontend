@@ -61,11 +61,11 @@ export default function JobList({ jobs, refreshJobs }) {
             &nbsp;&nbsp;
             {isEditing ? (
               <>
-                <button type="button" class="btn btn-success m-1" onClick={() => handleSaveClick(job._id || job.id)}>Save</button>
-                <button type="button" class="btn btn-danger" onClick={handleCancelClick}>Cancel</button>
+                <button onClick={() => handleSaveClick(job._id || job.id)}>Save</button>
+                <button onClick={handleCancelClick}>Cancel</button>
               </>
             ) : (
-               <button type="button" class="btn btn-primary" onClick={() => handleEditClick(job)}>Edit</button>
+              <button onClick={() => handleEditClick(job)}>Edit</button>
             )}
           </li>
         );
