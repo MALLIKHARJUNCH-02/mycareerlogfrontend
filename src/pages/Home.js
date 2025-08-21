@@ -4,20 +4,22 @@ import JobForm from '../components/JobForm';
 import JobList from '../components/JobList';
 import SearchBar from '../components/SearchBar';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 export default function Home() {
   const [jobs, setJobs] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState([]);
 
   // Fetch data from backend
   useEffect(() => {
-    axios.get('http://localhost:5000/applications')
+    axios.get(`${API_URL}/applications`)
       .then(res => setJobs(res.data))
       .catch(err => console.error(err));
   }, []);
 
   // Add job handler
   const addJob = async (job) => {
-    const res = await axios.post('http://localhost:5000/applications', job);
+    const res = await axios.post(`${API_URL}/applications`, job);
     setJobs([res.data, ...jobs]);
   };
 
