@@ -1,25 +1,25 @@
-import React, { useState, useMemo } from "react";
-import axios from "axios";
+import React, { useState, useMemo } from 'react';
+import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const statusColors = {
-  Applied: "primary",
-  "Application Viewed": "secondary",
-  "Qualifying Assessment": "warning",
-  Interviewing: "info",
-  "Offer Letter": "success",
-  "Offer Accepted": "success",
-  Rejected: "danger",
-  Withdrawn: "dark",
-  "On Hold": "warning",
+  Applied: '#3498db',
+  'Application Viewed': '#9b59b6',
+  'Qualifying Assessment': '#f39c12',
+  Interviewing: '#2980b9',
+  'Offer Letter': '#27ae60',
+  'Offer Accepted': '#2ecc71',
+  Rejected: '#e74c3c',
+  Withdrawn: '#95a5a6',
+  'On Hold': '#f1c40f'
 };
 
 export default function JobList({ jobs, refreshJobs }) {
   const [editingId, setEditingId] = useState(null);
-  const [editStatus, setEditStatus] = useState("");
+  const [editStatus, setEditStatus] = useState('');
 
-  // ✅ Summary counts
+  // ✅ Summary counts (memoized for performance)
   const statusCounts = useMemo(() => {
     const counts = { Total: jobs?.length || 0 };
     Object.keys(statusColors).forEach((status) => {
@@ -46,7 +46,7 @@ export default function JobList({ jobs, refreshJobs }) {
       setEditingId(null);
       await refreshJobs();
     } catch (err) {
-      console.error("Update error:", err);
+      console.error('Update error:', err);
     }
   };
 
@@ -54,116 +54,77 @@ export default function JobList({ jobs, refreshJobs }) {
     setEditingId(null);
   };
 
-  if (!jobs || jobs.length === 0)
-    return <p className="text-muted text-center mt-4">No applications found.</p>;
+  if (!jobs || jobs.length === 0) return <p>No applications found.</p>;
 
   return (
-    <div className="container my-4">
+    <div>
       {/* ✅ Applications Summary */}
-      <div className="card shadow-sm mb-4">
-        <div className="card-body">
-          <h5 className="card-title">📊 Applications Summary</h5>
-          <div className="row text-center">
-            <div className="col-12 mb-2">
-              <span className="badge bg-dark p-2">
-                Total Applications: {statusCounts.Total}
-              </span>
-            </div>
-            {Object.keys(statusColors).map((status) =>
-              statusCounts[status] > 0 ? (
-                <div key={status} className="col-md-3 col-6 mb-2">
-                  <span className={`badge bg-${statusColors[status]} p-2`}>
-                    {status}: {statusCounts[status]}
-                  </span>
-                </div>
-              ) : null
-            )}
-          </div>
-        </div>
+      <div className="mb-3 p-3 border rounded">
+        <h5>📊 Applications Summary</h5>
+        <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          <li><strong>Total:</strong> {statusCounts.Total}</li>
+          {Object.keys(statusColors).map((status) => (
+            <li key={status}>
+              <span style={{ color: statusColors[status] }}>
+                {status}:
+              </span>{' '}
+              {statusCounts[status]}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* ✅ Applications List */}
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <h5 className="card-title mb-3">📂 Application Log</h5>
-          <div className="table-responsive">
-            <table className="table table-striped table-hover align-middle">
-              <thead className="table-dark">
-                <tr>
-                  <th>Company</th>
-                  <th>Applied Date</th>
-                  <th>Status</th>
-                  <th className="text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jobs.map((job) => {
-                  const isEditing = editingId === (job._id || job.id);
-                  return (
-                    <tr key={job._id || job.id}>
-                      <td>
-                        <strong>{job.company}</strong>
-                      </td>
-                      <td>{job.appliedDate.split("T")[0]}</td>
-                      <td>
-                        {isEditing ? (
-                          <select
-                            className="form-select"
-                            value={editStatus}
-                            onChange={(e) => setEditStatus(e.target.value)}
-                          >
-                            {Object.keys(statusColors).map((status) => (
-                              <option key={status} value={status}>
-                                {status}
-                              </option>
-                            ))}
-                          </select>
-                        ) : (
-                          <span
-                            className={`badge bg-${
-                              statusColors[job.status] || "secondary"
-                            }`}
-                          >
-                            {job.status}
-                          </span>
-                        )}
-                      </td>
-                      <td className="text-end">
-                        {isEditing ? (
-                          <>
-                            <button
-                              type="button"
-                              className="btn btn-success btn-sm me-2"
-                              onClick={() => handleSaveClick(job._id || job.id)}
-                            >
-                              💾 Save
-                            </button>
-                            <button
-                              type="button"
-                              className="btn btn-outline-danger btn-sm"
-                              onClick={handleCancelClick}
-                            >
-                              ❌ Cancel
-                            </button>
-                          </>
-                        ) : (
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-sm"
-                            onClick={() => handleEditClick(job)}
-                          >
-                            ✏️ Edit
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {jobs.map((job) => {
+          const isEditing = editingId === (job._id || job.id);
+          return (
+            <li key={job._id || job.id} style={{ padding: 10, borderBottom: '1px solid #ccc' }}>
+              <strong>{job.company}</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+              Applied on: {job.appliedDate.split('T')[0]} &nbsp;&nbsp;|&nbsp;&nbsp;
+              Status:{' '}
+              {isEditing ? (
+                <select value={editStatus} onChange={(e) => setEditStatus(e.target.value)}>
+                  {Object.keys(statusColors).map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <span style={{ color: statusColors[job.status] || '#000' }}>{job.status}</span>
+              )}
+              &nbsp;&nbsp;
+              {isEditing ? (
+                <>
+                  <button
+                    type="button"
+                    className="btn btn-success m-1"
+                    onClick={() => handleSaveClick(job._id || job.id)}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={handleCancelClick}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => handleEditClick(job)}
+                >
+                  Edit
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
