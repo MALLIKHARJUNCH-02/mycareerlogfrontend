@@ -32,16 +32,19 @@ export default function JobForm({ addJob }) {
                 style={{ marginRight: '10px' }}
             />
             <select value={status} onChange={e => setStatus(e.target.value)} style={{ marginRight: '10px' }}>
-                <option>Applied</option>
-                <option>Application Viewed</option>
-                <option>Qualifying Assessment</option>
-                <option>Interviewing</option>
-                <option>Offer Letter</option>
-                <option>Offer Accepted</option>
-                <option>Rejected</option>
-                <option>Withdrawn</option>
-                <option>On Hold</option>
+                <option value="application_submitted">Application Submitted</option>
+                <option value="under_review">Under Review</option>
+                <option value="assessment_in_progress">Assessment in Progress</option>
+                <option value="shortlisted">Shortlisted</option>
+                <option value="interview_scheduled">Interview Scheduled</option>
+                <option value="awaiting_decision">Interview Completed — Awaiting Decision</option>
+                <option value="offer_extended">Offer Extended</option>
+                <option value="offer_accepted">Offer Accepted</option>
+                <option value="not_selected">Not Selected</option>
+                <option value="withdrawn">Application Withdrawn</option>
+                <option value="on_hold">On Hold</option>
             </select>
+
             <button type="submit">Add</button>
         </form>
     );
