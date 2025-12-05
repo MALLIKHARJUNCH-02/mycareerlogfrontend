@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import axios from 'axios';
-import "../components/jobList.css"
 const API_URL = process.env.REACT_APP_API_URL;
 
 const statusColors = {
