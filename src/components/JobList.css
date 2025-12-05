@@ -1,0 +1,93 @@
+.job-list-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Summary Card */
+.summary-card {
+  border-radius: 16px;
+}
+
+.summary-total-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f4f6fb;
+  border: 1px solid #dde3f0;
+}
+
+.summary-total-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7f8c8d;
+}
+
+.summary-total-value {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+/* Status Chips in Summary */
+.status-chip {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: #f8f9fb;
+  border: 1px solid #edf0f7;
+  font-size: 0.8rem;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.status-chip-label {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.status-chip-count {
+  font-weight: 600;
+  color: #7f8c8d;
+}
+
+/* Job Cards */
+.job-card {
+  border-radius: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+.job-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.job-card .card-subtitle {
+  font-size: 0.85rem;
+}
+
+/* Status badge + select */
+.status-badge {
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.status-select {
+  min-width: 180px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
