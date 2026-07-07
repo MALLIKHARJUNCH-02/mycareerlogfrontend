@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import {
-    FaBuilding,
-    FaCalendarAlt,
-    FaClipboardList,
     FaPlus,
 } from "react-icons/fa";
 

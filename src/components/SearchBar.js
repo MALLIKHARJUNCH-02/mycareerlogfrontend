@@ -1,5 +1,5 @@
 import React from "react";
-import { FaSearch, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 
 export default function SearchBar({
   search,
