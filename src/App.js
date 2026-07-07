@@ -84,13 +84,13 @@ function App() {
           setSearch={setSearch}
         />
 
-        <Charts jobs={jobs} />
 
         <JobList
           jobs={filteredJobs}
           refreshJobs={fetchJobs}
         />
 
+        <Charts jobs={jobs} />
       </div>
 
     </div>

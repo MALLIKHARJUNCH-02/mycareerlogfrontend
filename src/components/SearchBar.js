@@ -18,8 +18,6 @@ export default function SearchBar({
 
           <div className="search-box">
 
-            <FaSearch className="search-icon" />
-
             <input
               type="text"
               placeholder="Search by company name..."

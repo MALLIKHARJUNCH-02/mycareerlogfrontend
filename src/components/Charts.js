@@ -117,7 +117,7 @@ export default function Charts({ jobs }) {
     };
 
     return (
-        <div className="row mb-4">
+        <div className="row mb-4 mt-4">
             {/* Doughnut */}
 
             <div className="col-lg-5 mb-4">
