@@ -1,15 +1,102 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import DashboardHeader from "./components/DashboardHeader";
+import SummaryCards from "./components/SummaryCards";
+import JobForm from "./components/JobForm";
+import SearchBar from "./components/SearchBar";
+import JobList from "./components/JobList";
+import Charts from "./components/Charts";
+
+import "./styles/dashboard.css";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
+
+  const [jobs, setJobs] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const fetchJobs = async () => {
+
+    try {
+
+      const res = await axios.get(`${API_URL}/applications`);
+
+      setJobs(res.data);
+
+    }
+    catch (err) {
+
+      console.log(err);
+
+    }
+
+  }
+
+  useEffect(() => {
+
+    fetchJobs();
+
+  }, []);
+
+  const addJob = async (job) => {
+
+    try {
+
+      await axios.post(`${API_URL}/applications`, job);
+
+      fetchJobs();
+
+    }
+    catch (err) {
+
+      console.log(err);
+
+    }
+
+  }
+
+  const filteredJobs = jobs.filter(job =>
+
+    job.company.toLowerCase().includes(search.toLowerCase())
+
   );
+
+  return (
+
+    <div>
+
+      <DashboardHeader />
+
+      <div className="container py-5">
+
+        <SummaryCards jobs={jobs} />
+
+        <div className="my-4">
+
+          <JobForm addJob={addJob} />
+
+        </div>
+
+        <SearchBar
+          search={search}
+          setSearch={setSearch}
+        />
+
+        <Charts jobs={jobs} />
+
+        <JobList
+          jobs={filteredJobs}
+          refreshJobs={fetchJobs}
+        />
+
+      </div>
+
+    </div>
+
+  )
+
 }
 
 export default App;
